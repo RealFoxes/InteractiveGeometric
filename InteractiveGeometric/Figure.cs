@@ -2,14 +2,13 @@
 {
     public class Figure
     {
-        private FigureType figureType;
-        private OperationType operationType;
-        private List<PointF> points;
-        public Figure(FigureType figureType, OperationType operationType, List<PointF> points)
+		public FigureType FigureType { get; set; }
+		public OperationType OperationType { get; set; }
+		public Color Color { get; set; }
+		public List<PointF> Points { get; set; }
+		public Figure()
         {
-            this.figureType = figureType;
-            this.operationType = operationType;
-            this.points = points;
+			Points = new List<PointF>();
         }
     }
 }

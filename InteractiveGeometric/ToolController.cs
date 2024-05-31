@@ -13,6 +13,7 @@ namespace InteractiveGeometric
         private readonly FiguresController figuresController;
         private ToolMode toolMode;
         public ToolType SelectedTool;
+        public Color SelectedColor;
         public int SelectedToolOption;
         private Action completeAction;
         public ToolController(MainForm form, FiguresController figuresController)
@@ -21,6 +22,7 @@ namespace InteractiveGeometric
             this.form = form;
             this.figuresController = figuresController;
             this.toolMode = ToolMode.None;
+            this.SelectedColor = Color.Black;
             this.completeAction = () => { };
         }
         public void AddFigure(Point point)
@@ -33,12 +35,19 @@ namespace InteractiveGeometric
                     if (toolMode == ToolMode.None)
                     {
                         toolMode = ToolMode.SelectPoint;
-                        completeAction = () => figuresController.CreateFigure(FigureType.ER, SelectedPoints); 
+                        completeAction = () => figuresController.CreateFigure(FigureType.ER, new List<PointF>(SelectedPoints), SelectedColor); 
                     }
                     SelectedPoints.Add(point);
+                    if (SelectedPoints.Count == 4) Complete();
                     break;
                 case FigureType.FPg:
-                    break;
+					if (toolMode == ToolMode.None)
+					{
+						toolMode = ToolMode.SelectPoint;
+						completeAction = () => figuresController.CreateFigure(FigureType.FPg, new List<PointF>(SelectedPoints), SelectedColor);
+					}
+					SelectedPoints.Add(point);
+					break;
                 case FigureType.Zv:
                     break;
             }
@@ -79,8 +88,8 @@ namespace InteractiveGeometric
         public void ToolChanging(ToolType tag)
         {
             SelectedTool = tag;
-            SelectedTool = 0;
-            Reset();
+			SelectedToolOption = 1;
+			Reset();
         }
         public void ToolOptionChanging(int optionIndex)
         {
@@ -95,10 +104,11 @@ namespace InteractiveGeometric
         public void Complete()
         {
             completeAction.Invoke();
-        }
+			Reset();
+		}
         public void Reset()
         {
-            SelectedPoints.Clear();
+			SelectedPoints.Clear();
             toolMode = ToolMode.None;
             completeAction = () => { };
         }
