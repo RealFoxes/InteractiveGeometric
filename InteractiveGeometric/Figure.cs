@@ -10,7 +10,13 @@
         {
 			Points = new List<PointF>();
         }
-    }
+		public Figure Clone()
+		{
+			var obj = (Figure)MemberwiseClone();
+			obj.Points = new List<PointF>(Points);
+			return obj;
+		}
+	}
 
 	public class NStar : Figure
 	{

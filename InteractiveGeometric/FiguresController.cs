@@ -8,8 +8,11 @@ namespace InteractiveGeometric
 {
     public class FiguresController
     {
-        public List<Figure> Figures { get; set; }
-        public FiguresController()
+		public List<Figure> Figures { get; set; }
+
+		private Figure preview;
+		public Figure Preview { get; set; }
+		public FiguresController()
         {
             Figures = new List<Figure>();
         }
@@ -19,7 +22,6 @@ namespace InteractiveGeometric
             figure.FigureType = type;
             figure.Points = points;
             figure.Color = selectedColor;
-            Figures.Add(figure);
             return figure;
 		}
 		public NStar CreateNStar(int numRays, List<PointF> points, Color selectedColor)
@@ -29,7 +31,6 @@ namespace InteractiveGeometric
             figure.NumRays = numRays;
 			figure.Points = points;
 			figure.Color = selectedColor;
-			Figures.Add(figure);
             return figure;
 		}
 	}

@@ -23,6 +23,7 @@ namespace InteractiveGeometric.Tools
 		{
 			SelectedPoints.Clear();
 			ToolMode = ToolMode.None;
+			toolController.figuresController.Preview = null;
 		}
 		public virtual void Complete() 
 		{ 

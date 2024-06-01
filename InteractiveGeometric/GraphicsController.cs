@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace InteractiveGeometric
 {
@@ -37,24 +38,35 @@ namespace InteractiveGeometric
 
 		private void DrawFigures()
 		{
-            foreach (var figure in figuresController.Figures)
-            {
-                switch (figure.FigureType)
-                {
-                    case FigureType.None:
-                        break;
-                    case FigureType.ER:
-                        DrawCubicSpline(figure.Points, figure.Color);
-						break;
-                    case FigureType.FPg:
-                        g.FillPolygon(new SolidBrush(figure.Color), figure.Points.ToArray());
-                        break;
-                    case FigureType.Zv:
-						if(figure is NStar nStar)
-							DrawNStar(nStar.NumRays, nStar.Points, nStar.Color);
-                        break;
-                }
-            }
+			foreach (var figure in figuresController.Figures)
+			{
+				DrawFigure(figure);
+			}
+			if (figuresController.Preview != null)
+			{
+				var previewFigure = figuresController.Preview.Clone();
+				var color = previewFigure.Color;
+				previewFigure.Color = Color.FromArgb(120, color.R, color.G, color.B);
+				DrawFigure(previewFigure);
+			}
+		}
+		private void DrawFigure(Figure figure)
+		{
+			switch (figure.FigureType)
+			{
+				case FigureType.None:
+					break;
+				case FigureType.ER:
+					DrawCubicSpline(figure.Points, figure.Color);
+					break;
+				case FigureType.FPg:
+					g.FillPolygon(new SolidBrush(figure.Color), figure.Points.ToArray());
+					break;
+				case FigureType.Zv:
+					if (figure is NStar nStar)
+						DrawNStar(nStar.NumRays, nStar.Points, nStar.Color);
+					break;
+			}
 		}
 
 		private void DrawCubicSpline(List<PointF> points, Color color)

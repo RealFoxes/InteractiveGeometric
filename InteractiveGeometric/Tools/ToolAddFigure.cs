@@ -12,7 +12,7 @@ namespace InteractiveGeometric.Tools
 	public class ToolAddFigure : Tool, IDragSizeble
 	{
 		private NumberSelect numberSelect;
-		private Figure creatingFigure;
+		private Figure previewFigure;
 		public ToolAddFigure(ToolController toolController) : base(toolController)
 		{
 		}
@@ -48,25 +48,34 @@ namespace InteractiveGeometric.Tools
 				case FigureType.FPg:
 					ToolMode = ToolMode.SelectPoint;
 					SelectedPoints.Add(point);
+					if (SelectedPoints.Count > 2)
+					{
+						previewFigure = toolController.figuresController.CreateFigure(ToolOption, SelectedPoints, toolController.SelectedColor);
+						toolController.figuresController.Preview = previewFigure;
+					}
 					break;
 				case FigureType.Zv:
 					ToolMode = ToolMode.DragSize;
 					SelectedPoints.Add(point);
 					SelectedPoints.Add(point);
-					creatingFigure = toolController.figuresController.CreateNStar(numberSelect.trackBar.Value, SelectedPoints, toolController.SelectedColor);
+					previewFigure = toolController.figuresController.CreateNStar(numberSelect.trackBar.Value, SelectedPoints, toolController.SelectedColor);
+					toolController.figuresController.Preview = previewFigure;
 					break;
 			}
 		}
 
 		public override void Complete()
 		{
-			if (ToolOption == FigureType.Zv)
+			if (previewFigure != null)
 			{
+				toolController.figuresController.Figures.Add(previewFigure.Clone());
+				previewFigure = null;
 				base.Complete();
 				return;
 			}
 
-			toolController.figuresController.CreateFigure(ToolOption, new List<PointF>(SelectedPoints), toolController.SelectedColor);
+			var figure = toolController.figuresController.CreateFigure(ToolOption, new List<PointF>(SelectedPoints), toolController.SelectedColor);
+			toolController.figuresController.Figures.Add(figure);
 			base.Complete();
 		}
 
@@ -78,7 +87,6 @@ namespace InteractiveGeometric.Tools
 		public void End(Point point)
 		{
 			SelectedPoints[1] = point;
-			creatingFigure.Points = new List<PointF>(SelectedPoints);
 			Complete();
 		}
 	}
