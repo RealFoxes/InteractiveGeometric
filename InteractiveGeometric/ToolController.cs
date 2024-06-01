@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InteractiveGeometric.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,133 +9,65 @@ namespace InteractiveGeometric
 {
     public class ToolController
     {
-        private List<PointF> SelectedPoints;
-        private readonly MainForm form;
-        private readonly FiguresController figuresController;
-        private ToolMode toolMode;
-        public ToolType SelectedTool;
+		public readonly Panel AdditionalPanel;
+		public readonly FiguresController figuresController;
+
         public Color SelectedColor;
-        public int SelectedToolOption;
-        private Action completeAction;
-        public ToolController(MainForm form, FiguresController figuresController)
+		private Tool SelectedTool;
+        public ToolController(Panel panelAdditionalOption, FiguresController figuresController)
         {
-            this.SelectedPoints = new List<PointF>();
-            this.form = form;
+            this.SelectedTool = new ToolAddFigure(this);
+            this.AdditionalPanel = panelAdditionalOption;
             this.figuresController = figuresController;
-            this.toolMode = ToolMode.None;
             this.SelectedColor = Color.Black;
-            this.completeAction = () => { };
-        }
-        public void AddFigure(Point point)
-        {
-            switch ((FigureType)SelectedToolOption)
-            {
-                case FigureType.None:
-                    return;
-                case FigureType.ER:
-                    if (toolMode == ToolMode.None)
-                    {
-                        toolMode = ToolMode.SelectPoint;
-                        completeAction = () => figuresController.CreateFigure(FigureType.ER, new List<PointF>(SelectedPoints), SelectedColor); 
-                    }
-                    SelectedPoints.Add(point);
-                    if (SelectedPoints.Count == 4) Complete();
-                    break;
-                case FigureType.FPg:
-					if (toolMode == ToolMode.None)
-					{
-						toolMode = ToolMode.SelectPoint;
-						completeAction = () => figuresController.CreateFigure(FigureType.FPg, new List<PointF>(SelectedPoints), SelectedColor);
-					}
-					SelectedPoints.Add(point);
-					break;
-                case FigureType.Zv:
-                    break;
-            }
-        }
-        public void Transform(Point point)
-        {
-            switch ((TransformType)SelectedToolOption)
-            {
-                case TransformType.None:
-                    return;
-                case TransformType.Move:
-                    break;
-                case TransformType.Rf:
-                    break;
-                case TransformType.Syc:
-                    break;
-                case TransformType.Mc:
-                    break;
-            }
-        }
-        public void Operation(Point point)
-        {
-            switch ((OperationType)SelectedToolOption)
-            {
-                case OperationType.None:
-                    return;
-                case OperationType.Union:
-                    break;
-                case OperationType.Intersection:
-                    break;
-            }
-        }
-        public void SelectDeleting(Point point)
-        {
+		}
 
-        }
-
+        public List<PointF> GetSelectedPoints() => SelectedTool?.SelectedPoints;
         public void ToolChanging(ToolType tag)
         {
-            SelectedTool = tag;
-			SelectedToolOption = 1;
-			Reset();
+			AdditionalPanel.Controls.Clear();
+			switch (tag)
+            {
+                case ToolType.None:
+                    break;
+                case ToolType.AddFigure:
+                    SelectedTool = new ToolAddFigure(this);
+                    break;
+                case ToolType.Transform:
+					SelectedTool = new ToolTransform(this);
+					break;
+                case ToolType.Operation:
+					SelectedTool = new ToolOperation(this);
+					break;
+                case ToolType.SelectDeleting:
+					SelectedTool = new ToolSelectDeleting(this);
+					break;
+                default:
+                    break;
+            }
         }
-        public void ToolOptionChanging(int optionIndex)
+        public void ToolOptionChanging(int indexOption)
         {
-            SelectedToolOption = optionIndex;
-            Reset();
+            AdditionalPanel.Controls.Clear();
+            SelectedTool.ChangeOption(indexOption);
         }
 
         public void MouseMove(MouseEventArgs e)
         {
             
         }
-        public void Complete()
-        {
-            completeAction.Invoke();
-			Reset();
-		}
-        public void Reset()
-        {
-			SelectedPoints.Clear();
-            toolMode = ToolMode.None;
-            completeAction = () => { };
-        }
 
         public void UseTool(Point point)
         {
-            switch (SelectedTool)
-            {
-                case ToolType.None:
-                    return;
-                case ToolType.AddFigure:
-                    AddFigure(point);
-                    break;
-                case ToolType.Transform:
-                    Transform(point);
-                    break;
-                case ToolType.Operation:
-                    Operation(point);
-                    break;
-                case ToolType.SelectDeleting:
-                    SelectDeleting(point);
-                    break;
-            }
+            SelectedTool.Use(point);
         }
-        public List<PointF> GetSelectedPoints() => SelectedPoints;
-    }
+
+		public void Complete()
+		{
+			SelectedTool.Complete();
+		}
+	}
+
     public enum ToolMode
     {
         None,

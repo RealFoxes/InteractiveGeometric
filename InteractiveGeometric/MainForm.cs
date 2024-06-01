@@ -12,7 +12,7 @@ namespace InteractiveGeometric
 		{
 			InitializeComponent();
 			figuresController = new FiguresController();
-			toolController = new ToolController(this, figuresController);
+			toolController = new ToolController(panelAdditionalOption, figuresController);
 			graphicsController = new GraphicsController(pictureBox, figuresController, toolController);
 			comboBoxFigures.SelectedIndex = 0;
 		}
@@ -61,7 +61,7 @@ namespace InteractiveGeometric
 
 		private void buttonClear_Click(object sender, EventArgs e)
 		{
-			toolController.Reset();
+			//toolController.Reset();
 			figuresController.Figures.Clear();
 			graphicsController.Draw();
 		}

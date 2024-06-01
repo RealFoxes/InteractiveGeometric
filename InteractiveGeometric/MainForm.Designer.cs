@@ -43,6 +43,7 @@
 			radioButtonSelectDeleting = new RadioButton();
 			comboBoxFigures = new ComboBox();
 			colorDialog = new ColorDialog();
+			panelAdditionalOption = new Panel();
 			label1 = new Label();
 			label2 = new Label();
 			label3 = new Label();
@@ -78,6 +79,7 @@
 			// 
 			// pictureBox
 			// 
+			pictureBox.BackColor = Color.White;
 			pictureBox.Dock = DockStyle.Bottom;
 			pictureBox.Location = new Point(0, 70);
 			pictureBox.Margin = new Padding(3, 2, 3, 2);
@@ -209,11 +211,20 @@
 			comboBoxFigures.Tag = ToolType.AddFigure;
 			comboBoxFigures.SelectedIndexChanged += comboBoxesChanged;
 			// 
+			// panelAdditionalOption
+			// 
+			panelAdditionalOption.BackColor = Color.Transparent;
+			panelAdditionalOption.Location = new Point(572, 70);
+			panelAdditionalOption.Name = "panelAdditionalOption";
+			panelAdditionalOption.Size = new Size(200, 100);
+			panelAdditionalOption.TabIndex = 14;
+			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(772, 415);
+			Controls.Add(panelAdditionalOption);
 			Controls.Add(label3);
 			Controls.Add(label2);
 			Controls.Add(label1);
@@ -250,5 +261,6 @@
 		public ComboBox comboBoxOperations;
 		public ComboBox comboBoxFigures;
 		private ColorDialog colorDialog;
+		public Panel panelAdditionalOption;
 	}
 }

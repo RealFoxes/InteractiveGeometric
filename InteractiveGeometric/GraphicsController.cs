@@ -98,6 +98,8 @@ namespace InteractiveGeometric
 
 		private void DrawToolSelectedPoints()
 		{
+			if (toolController.GetSelectedPoints() == null) return;
+
 			var s = 5;
 			foreach (var point in toolController.GetSelectedPoints())
 				g.DrawEllipse(new Pen(Color.Red, 1), point.X - s, point.Y - s, s, s);
