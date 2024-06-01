@@ -13,13 +13,24 @@ namespace InteractiveGeometric
         {
             Figures = new List<Figure>();
         }
-        public void CreateFigure(FigureType type, List<PointF> points, Color selectedColor)
+        public Figure CreateFigure(FigureType type, List<PointF> points, Color selectedColor)
         {
             var figure = new Figure();
             figure.FigureType = type;
             figure.Points = points;
             figure.Color = selectedColor;
             Figures.Add(figure);
+            return figure;
+		}
+		public NStar CreateNStar(int numRays, List<PointF> points, Color selectedColor)
+		{
+			var figure = new NStar();
+			figure.FigureType = FigureType.Zv;
+            figure.NumRays = numRays;
+			figure.Points = points;
+			figure.Color = selectedColor;
+			Figures.Add(figure);
+            return figure;
 		}
 	}
 }

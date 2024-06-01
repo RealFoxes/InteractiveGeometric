@@ -11,4 +11,9 @@
 			Points = new List<PointF>();
         }
     }
+
+	public class NStar : Figure
+	{
+        public int NumRays { get; set; }
+    }
 }

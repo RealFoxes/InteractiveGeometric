@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
 namespace InteractiveGeometric
 {
@@ -52,19 +53,37 @@ namespace InteractiveGeometric
             SelectedTool.ChangeOption(indexOption);
         }
 
-        public void MouseMove(MouseEventArgs e)
-        {
-            
-        }
+
 
         public void UseTool(Point point)
         {
             SelectedTool.Use(point);
         }
+		public bool MouseMove(Point point)
+		{
+			if (SelectedTool is not IDragSizeble sizeble) return false;
+            if (SelectedTool.ToolMode != ToolMode.DragSize) return false;
+            sizeble.Move(point);
+            return true;
+		}
+
+		public bool MouseUp(Point point)
+		{
+			if (SelectedTool is not IDragSizeble sizeble) return false;
+			if (SelectedTool.ToolMode != ToolMode.DragSize) return false;
+			sizeble.End(point);
+            return true;
+		}
+
 
 		public void Complete()
 		{
 			SelectedTool.Complete();
+		}
+
+		public void Reset()
+		{
+			SelectedTool.Reset();
 		}
 	}
 

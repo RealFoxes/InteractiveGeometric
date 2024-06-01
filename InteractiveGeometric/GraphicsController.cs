@@ -50,6 +50,8 @@ namespace InteractiveGeometric
                         g.FillPolygon(new SolidBrush(figure.Color), figure.Points.ToArray());
                         break;
                     case FigureType.Zv:
+						if(figure is NStar nStar)
+							DrawNStar(nStar.NumRays, nStar.Points, nStar.Color);
                         break;
                 }
             }
@@ -109,11 +111,35 @@ namespace InteractiveGeometric
 			var rect = new Rectangle();
 			rect.X = (int)points[0].X;
 			rect.Y = (int)points[0].Y;
-			rect.Width = (int)points[1].X;
-			rect.Height = (int)points[1].Y;
-			var starPoints = MakeStarPoints(0, numPoints, 0, rect);
+			rect.Width = (int)(points[1].X - points[0].X);
+			rect.Height = (int)(points[1].Y - points[0].Y);
+			var starPoints = GetStarPoints(numPoints, rect);
 			g.FillPolygon(new SolidBrush(color), starPoints);
 		}
+
+		private PointF[] GetStarPoints(int numPoints, Rectangle bounds)
+		{
+			List<PointF> starPoints = new List<PointF>();
+
+			float centerX = bounds.X + bounds.Width / 2f;
+			float centerY = bounds.Y + bounds.Height / 2f;
+			float radiusOuter = Math.Min(bounds.Width, bounds.Height) / 2f;
+			float radiusInner = radiusOuter / 2.5f; // Adjust as needed for the inner radius
+
+			double angleStep = Math.PI / numPoints;
+
+			for (int i = 0; i < 2 * numPoints; i++)
+			{
+				double angle = i * angleStep - Math.PI / 2; // Adjust angle to start from the top
+				float radius = (i % 2 == 0) ? radiusOuter : radiusInner;
+				float x = centerX + (float)(radius * Math.Cos(angle));
+				float y = centerY + (float)(radius * Math.Sin(angle));
+				starPoints.Add(new PointF(x, y));
+			}
+
+			return starPoints.ToArray();
+		}
+
 		//Math below
 
 		private PointF[] MakeStarPoints(double startTheta, int numPoints, int skip, Rectangle rect)

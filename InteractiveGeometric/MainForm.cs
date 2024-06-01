@@ -41,6 +41,20 @@ namespace InteractiveGeometric
 			toolController.ToolOptionChanging(comboBox.SelectedIndex);
 		}
 
+
+		private void buttonClear_Click(object sender, EventArgs e)
+		{
+			toolController.Reset();
+			figuresController.Figures.Clear();
+			graphicsController.Draw();
+		}
+
+		private void buttonColor_Click(object sender, EventArgs e)
+		{
+			colorDialog.ShowDialog();
+			toolController.SelectedColor = colorDialog.Color;
+		}
+
 		private void pictureBox_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
@@ -56,20 +70,17 @@ namespace InteractiveGeometric
 
 		private void pictureBox_MouseMove(object sender, MouseEventArgs e)
 		{
-			toolController.MouseMove(e);
+			var point = new Point(e.X, e.Y);
+			if (toolController.MouseMove(point))
+				graphicsController.Draw();
 		}
 
-		private void buttonClear_Click(object sender, EventArgs e)
+		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
 		{
-			//toolController.Reset();
-			figuresController.Figures.Clear();
-			graphicsController.Draw();
-		}
+			var point = new Point(e.X, e.Y);
+			if(toolController.MouseUp(point))
+				graphicsController.Draw();
 
-		private void buttonColor_Click(object sender, EventArgs e)
-		{
-			colorDialog.ShowDialog();
-			toolController.SelectedColor = colorDialog.Color;
 		}
 	}
 }

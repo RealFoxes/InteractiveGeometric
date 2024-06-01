@@ -89,6 +89,7 @@
 			pictureBox.TabStop = false;
 			pictureBox.MouseDown += pictureBox_MouseDown;
 			pictureBox.MouseMove += pictureBox_MouseMove;
+			pictureBox.MouseUp += pictureBox_MouseUp;
 			// 
 			// comboBoxTransforms
 			// 
