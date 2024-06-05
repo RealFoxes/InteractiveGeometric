@@ -49,60 +49,12 @@ namespace InteractiveGeometric.Controllers
 
 		public void Union(Figure figure1, Figure figure2)
 		{
-			var unionPoints = new List<PointF>();
-
-			// Простая реализация объединения: просто соединить все точки
-			unionPoints.AddRange(figure1.Points);
-			unionPoints.AddRange(figure2.Points);
-
-			// Удалить дубликаты точек
-			unionPoints = unionPoints.Distinct().ToList();
-
-			var unionFigure = new Figure
-			{
-				FigureType = FigureType.FPg,
-				Points = unionPoints,
-				Color = figure1.Color // Цвет объединенной фигуры
-			};
-
-			Figures.Remove(figure1);
-			Figures.Remove(figure2);
-			Figures.Add(unionFigure);
+			
 
 		}
 		public void Intersection(Figure figure1, Figure figure2)
 		{
-			var intersectionPoints = new List<PointF>();
-
-			// Простая реализация пересечения: взять точки, которые находятся внутри обоих многоугольников
-			foreach (var point in figure1.Points)
-			{
-				if (figure2.PointInPolygon(point))
-				{
-					intersectionPoints.Add(point);
-				}
-			}
-
-			foreach (var point in figure2.Points)
-			{
-				if (figure1.PointInPolygon(point))
-				{
-					intersectionPoints.Add(point);
-				}
-			}
-
-			intersectionPoints = intersectionPoints.Distinct().ToList();
-
-			var intersectionFigure = new Figure
-			{
-				FigureType = FigureType.FPg,
-				Points = intersectionPoints,
-				Color = figure1.Color
-			};
-
-			Figures.Remove(figure1);
-			Figures.Remove(figure2);
-			Figures.Add(intersectionFigure);
+			
 		}
 	}
 }
