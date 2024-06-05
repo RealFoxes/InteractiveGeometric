@@ -1,6 +1,8 @@
-﻿namespace InteractiveGeometric
+﻿using InteractiveGeometric.Controllers;
+
+namespace InteractiveGeometric
 {
-	public partial class MainForm
+    public partial class MainForm
 	{
 		/// <summary>
 		///  Required designer variable.

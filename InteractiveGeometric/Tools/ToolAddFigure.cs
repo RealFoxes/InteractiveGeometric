@@ -1,4 +1,6 @@
-﻿using InteractiveGeometric.UserControls;
+﻿using InteractiveGeometric.Controllers;
+using InteractiveGeometric.Figures;
+using InteractiveGeometric.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +11,7 @@ using System.Windows.Forms;
 
 namespace InteractiveGeometric.Tools
 {
-	public class ToolAddFigure : Tool, IDragSizeble
+    public class ToolAddFigure : Tool, IDragSizeble
 	{
 		private NumberSelect numberSelect;
 		private Figure previewFigure;
@@ -55,10 +57,10 @@ namespace InteractiveGeometric.Tools
 					}
 					break;
 				case FigureType.Zv:
-					ToolMode = ToolMode.DragSize;
+					ToolMode = ToolMode.DragMove;
 					SelectedPoints.Add(point);
 					SelectedPoints.Add(point);
-					previewFigure = toolController.figuresController.CreateNStar(numberSelect.trackBar.Value, SelectedPoints, toolController.SelectedColor);
+					previewFigure = toolController.figuresController.CreateNStar(numberSelect.trackBar.Value, SelectedBounds, toolController.SelectedColor);
 					toolController.figuresController.Preview = previewFigure;
 					break;
 			}
@@ -82,11 +84,20 @@ namespace InteractiveGeometric.Tools
 		public void Move(Point point)
 		{
 			SelectedPoints[1] = point;
+			if (previewFigure is NStar nStar)
+				nStar.Bounds = SelectedBounds;
+
 		}
 
 		public void End(Point point)
 		{
 			SelectedPoints[1] = point;
+			if (previewFigure is NStar nStar)
+			{
+				nStar.Bounds = SelectedBounds;
+				previewFigure.Calculate();
+				previewFigure.Calculated = true;
+			}
 			Complete();
 		}
 	}

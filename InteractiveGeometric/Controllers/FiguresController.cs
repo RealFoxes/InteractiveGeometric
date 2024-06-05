@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InteractiveGeometric.Figures;
 
-namespace InteractiveGeometric
+namespace InteractiveGeometric.Controllers
 {
     public class FiguresController
     {
-		public List<Figure> Figures { get; set; }
+        public List<Figure> Figures { get; set; }
 
-		private Figure preview;
-		public Figure Preview { get; set; }
-		public FiguresController()
+        private Figure preview;
+        public Figure Preview { get; set; }
+        public FiguresController()
         {
             Figures = new List<Figure>();
         }
@@ -23,15 +24,17 @@ namespace InteractiveGeometric
             figure.Points = points;
             figure.Color = selectedColor;
             return figure;
-		}
-		public NStar CreateNStar(int numRays, List<PointF> points, Color selectedColor)
-		{
-			var figure = new NStar();
-			figure.FigureType = FigureType.Zv;
+        }
+        public NStar CreateNStar(int numRays, Rectangle bounds, Color selectedColor)
+        {
+            var figure = new NStar();
+            figure.FigureType = FigureType.Zv;
             figure.NumRays = numRays;
-			figure.Points = points;
-			figure.Color = selectedColor;
+            figure.Color = selectedColor;
+            figure.Bounds = bounds;
             return figure;
-		}
-	}
+        }
+
+
+    }
 }

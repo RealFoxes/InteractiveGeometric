@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InteractiveGeometric.Controllers;
 
 namespace InteractiveGeometric.Tools
 {
-	public class ToolTransform : Tool
+    public class ToolTransform : Tool
 	{
 		public ToolTransform(ToolController toolController) : base(toolController)
 		{
@@ -28,6 +29,7 @@ namespace InteractiveGeometric.Tools
 				case TransformType.None:
 					return;
 				case TransformType.Move:
+
 					break;
 				case TransformType.Rf:
 					break;

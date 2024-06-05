@@ -6,28 +6,28 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
-namespace InteractiveGeometric
+namespace InteractiveGeometric.Controllers
 {
     public class ToolController
     {
-		public readonly Panel AdditionalPanel;
-		public readonly FiguresController figuresController;
+        public readonly Panel AdditionalPanel;
+        public readonly FiguresController figuresController;
 
         public Color SelectedColor;
-		private Tool SelectedTool;
+        private Tool SelectedTool;
         public ToolController(Panel panelAdditionalOption, FiguresController figuresController)
         {
-            this.SelectedTool = new ToolAddFigure(this);
-            this.AdditionalPanel = panelAdditionalOption;
+            SelectedTool = new ToolAddFigure(this);
+            AdditionalPanel = panelAdditionalOption;
             this.figuresController = figuresController;
-            this.SelectedColor = Color.Black;
-		}
+            SelectedColor = Color.Black;
+        }
 
         public List<PointF> GetSelectedPoints() => SelectedTool?.SelectedPoints;
         public void ToolChanging(ToolType tag)
         {
-			AdditionalPanel.Controls.Clear();
-			switch (tag)
+            AdditionalPanel.Controls.Clear();
+            switch (tag)
             {
                 case ToolType.None:
                     break;
@@ -35,14 +35,14 @@ namespace InteractiveGeometric
                     SelectedTool = new ToolAddFigure(this);
                     break;
                 case ToolType.Transform:
-					SelectedTool = new ToolTransform(this);
-					break;
+                    SelectedTool = new ToolTransform(this);
+                    break;
                 case ToolType.Operation:
-					SelectedTool = new ToolOperation(this);
-					break;
+                    SelectedTool = new ToolOperation(this);
+                    break;
                 case ToolType.SelectDeleting:
-					SelectedTool = new ToolSelectDeleting(this);
-					break;
+                    SelectedTool = new ToolSelectDeleting(this);
+                    break;
                 default:
                     break;
             }
@@ -59,40 +59,40 @@ namespace InteractiveGeometric
         {
             SelectedTool.Use(point);
         }
-		public bool MouseMove(Point point)
-		{
-			if (SelectedTool is not IDragSizeble sizeble) return false;
-            if (SelectedTool.ToolMode != ToolMode.DragSize) return false;
+        public bool MouseMove(Point point)
+        {
+            if (SelectedTool is not IDragSizeble sizeble) return false;
+            if (SelectedTool.ToolMode != ToolMode.DragMove) return false;
             sizeble.Move(point);
             return true;
-		}
+        }
 
-		public bool MouseUp(Point point)
-		{
-			if (SelectedTool is not IDragSizeble sizeble) return false;
-			if (SelectedTool.ToolMode != ToolMode.DragSize) return false;
-			sizeble.End(point);
+        public bool MouseUp(Point point)
+        {
+            if (SelectedTool is not IDragSizeble sizeble) return false;
+            if (SelectedTool.ToolMode != ToolMode.DragMove) return false;
+            sizeble.End(point);
             return true;
-		}
+        }
 
 
-		public void Complete()
-		{
-			SelectedTool.Complete();
-		}
+        public void Complete()
+        {
+            SelectedTool.Complete();
+        }
 
-		public void Reset()
-		{
-			SelectedTool.Reset();
-		}
-	}
+        public void Reset()
+        {
+            SelectedTool.Reset();
+        }
+    }
 
     public enum ToolMode
     {
         None,
         SelectPoint,
         SelectFigure,
-        DragSize
+        DragMove
     }
     public enum ToolType
     {

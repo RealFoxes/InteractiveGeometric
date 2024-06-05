@@ -1,8 +1,9 @@
 using System.Windows.Forms;
+using InteractiveGeometric.Controllers;
 
 namespace InteractiveGeometric
 {
-	public partial class MainForm : Form
+    public partial class MainForm : Form
 	{
 		private ToolController toolController;
 		private GraphicsController graphicsController;

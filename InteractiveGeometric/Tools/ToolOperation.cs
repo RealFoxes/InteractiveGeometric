@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InteractiveGeometric.Controllers;
 
 namespace InteractiveGeometric.Tools
 {
-	public class ToolOperation : Tool
+    public class ToolOperation : Tool
 	{
 		public ToolOperation(ToolController toolController) : base(toolController)
 		{

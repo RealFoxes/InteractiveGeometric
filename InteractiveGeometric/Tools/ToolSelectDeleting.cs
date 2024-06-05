@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InteractiveGeometric.Controllers;
 
 namespace InteractiveGeometric.Tools
 {
-	public class ToolSelectDeleting : Tool
+    public class ToolSelectDeleting : Tool
 	{
 		public ToolSelectDeleting(ToolController toolController) : base(toolController)
 		{
