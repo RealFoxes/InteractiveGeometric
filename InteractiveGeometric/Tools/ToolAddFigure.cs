@@ -76,9 +76,31 @@ namespace InteractiveGeometric.Tools
 				base.Complete();
 				return;
 			}
+			switch (ToolOption)
+			{
+				case FigureType.None:
+					break;
+				case FigureType.ER:
+					if (SelectedPoints.Count < 4)
+					{
+						base.Complete();
+						return;
+					}
+					break;
+				case FigureType.FPg:
+					if (SelectedPoints.Count < 3)
+					{
+						base.Complete();
+						return;
+					}
+					break;
+				case FigureType.Zv:
+					break;
+			}
 
 			var figure = toolController.figuresController.CreateFigure(ToolOption, new List<PointF>(SelectedPoints), toolController.SelectedColor);
-			toolController.figuresController.Figures.Add(figure);
+				toolController.figuresController.Figures.Add(figure);
+			
 			base.Complete();
 		}
 

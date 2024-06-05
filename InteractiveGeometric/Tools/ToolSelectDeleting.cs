@@ -15,12 +15,15 @@ namespace InteractiveGeometric.Tools
 
 		public override void ChangeOption(int indexOption)
 		{
-			throw new NotImplementedException();
+			
 		}
 
 		public override void Use(PointF point)
 		{
-			throw new NotImplementedException();
+			var selectedFigure = toolController.figuresController.GetFigure(point);
+			if (selectedFigure == null) return;
+			toolController.figuresController.Figures.Remove(selectedFigure);
+			Complete();
 		}
 	}
 }
