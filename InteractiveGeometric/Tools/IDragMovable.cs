@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InteractiveGeometric.Tools
 {
-	public interface IDragSizeble
+	public interface IDragMovable
 	{
 		void Move(Point point);
 		void End(Point point);

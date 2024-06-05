@@ -35,6 +35,18 @@ namespace InteractiveGeometric.Controllers
             return figure;
         }
 
+		public Figure GetFigure(PointF point)
+		{
+			foreach (var figure in Figures)
+			{
+				if (figure.PointInPolygon(point))
+				{
+					return figure;
+				}
+			}
+			return null;
+		}
 
-    }
+
+	}
 }

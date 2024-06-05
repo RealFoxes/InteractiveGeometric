@@ -27,6 +27,7 @@ namespace InteractiveGeometric.Controllers
         public void ToolChanging(ToolType tag)
         {
             AdditionalPanel.Controls.Clear();
+            AdditionalPanel.Visible = false;
             switch (tag)
             {
                 case ToolType.None:
@@ -46,11 +47,14 @@ namespace InteractiveGeometric.Controllers
                 default:
                     break;
             }
-        }
+            ToolOptionChanging(0);
+
+		}
         public void ToolOptionChanging(int indexOption)
         {
             AdditionalPanel.Controls.Clear();
-            SelectedTool.ChangeOption(indexOption);
+			AdditionalPanel.Visible = false;
+			SelectedTool.ChangeOption(indexOption);
         }
 
 
@@ -61,7 +65,7 @@ namespace InteractiveGeometric.Controllers
         }
         public bool MouseMove(Point point)
         {
-            if (SelectedTool is not IDragSizeble sizeble) return false;
+            if (SelectedTool is not IDragMovable sizeble) return false;
             if (SelectedTool.ToolMode != ToolMode.DragMove) return false;
             sizeble.Move(point);
             return true;
@@ -69,7 +73,7 @@ namespace InteractiveGeometric.Controllers
 
         public bool MouseUp(Point point)
         {
-            if (SelectedTool is not IDragSizeble sizeble) return false;
+            if (SelectedTool is not IDragMovable sizeble) return false;
             if (SelectedTool.ToolMode != ToolMode.DragMove) return false;
             sizeble.End(point);
             return true;

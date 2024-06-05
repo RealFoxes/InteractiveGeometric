@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace InteractiveGeometric.Tools
 {
-    public class ToolAddFigure : Tool, IDragSizeble
+    public class ToolAddFigure : Tool, IDragMovable
 	{
 		private NumberSelect numberSelect;
 		private Figure previewFigure;
@@ -33,6 +33,7 @@ namespace InteractiveGeometric.Tools
 				numberSelect.RefreshValueLabel();
 				numberSelect.Dock = DockStyle.Fill;
 				toolController.AdditionalPanel.Controls.Add(numberSelect);
+				toolController.AdditionalPanel.Visible = true;
 			}
 		}
 
