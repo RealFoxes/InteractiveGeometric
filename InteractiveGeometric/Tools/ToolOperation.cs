@@ -19,6 +19,11 @@ namespace InteractiveGeometric.Tools
 		}
 
 		public OperationType ToolOption { get; set; } = OperationType.Union;
+		public override string[] ToolOptionInfos => new string[]
+		{
+			"Выберите 2 фигуры с помощью ЛКМ",
+			"Выберите 2 фигуры с помощью ЛКМ"
+		};
 
 		public override void ChangeOption(int indexOption)
 		{
@@ -52,12 +57,22 @@ namespace InteractiveGeometric.Tools
 		private bool Selection(PointF point)
 		{
 			var figure = toolController.figuresController.GetFigure(point);
+			if(figure == null)
+				return false;
+			if (figure.FigureType == FigureType.ER)
+			{
+				toolController.PrintToolError("Не может быть выбран кубический сплайн");
+				return false;
+			}
+
 			selectedFigures.Add(figure);
+			SelectedPoints.Add(point);
 			if (selectedFigures.Count == 2)
 			{
 				if (selectedFigures[0].Equals(selectedFigures[1]))
 				{
 					Complete();
+					toolController.PrintToolError("Выбрана одна и та же фигура");
 					return false;
 				}
 				return true;

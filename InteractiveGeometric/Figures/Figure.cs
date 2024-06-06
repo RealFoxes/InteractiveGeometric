@@ -14,7 +14,6 @@ namespace InteractiveGeometric.Figures
 
 		public Guid Id { get; set; }
 		public FigureType FigureType { get; set; }
-		public OperationType OperationType { get; set; }
 		public Color Color { get; set; }
 		public List<PointF> Points { get; set; }
 		public bool IsSelected { get; set; }
@@ -218,8 +217,6 @@ namespace InteractiveGeometric.Figures
 			}
 			return result;
 		}
-
-		
 	}
 }
 

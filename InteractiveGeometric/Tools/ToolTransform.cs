@@ -20,7 +20,13 @@ namespace InteractiveGeometric.Tools
 		}
 
 		public TransformType ToolOption { get; set; } = TransformType.Rf;
-
+		public override string[] ToolOptionInfos => new string[]
+		{
+			"Перемещайте фигуру с помощью зажатой ЛКМ",
+			"Вращайте фигуру с помощью зажатой ЛКМ",
+			"Изменяйте размер фигуры с помощью зажатой ЛКМ",
+			"Выберите фигуру для отзеркаливания ЛКМ",
+		};
 		public override void ChangeOption(int indexOption)
 		{
 			ToolOption = (TransformType)indexOption;

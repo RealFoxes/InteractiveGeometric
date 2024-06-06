@@ -36,27 +36,29 @@
 			// 
 			// trackBar
 			// 
-			trackBar.Location = new Point(3, 18);
+			trackBar.Location = new Point(3, 25);
 			trackBar.Name = "trackBar";
-			trackBar.Size = new Size(192, 45);
+			trackBar.Size = new Size(394, 45);
 			trackBar.TabIndex = 0;
 			trackBar.ValueChanged += trackBar_ValueChanged;
 			// 
 			// labelName
 			// 
 			labelName.AutoSize = true;
+			labelName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
 			labelName.Location = new Point(3, 0);
 			labelName.Name = "labelName";
-			labelName.Size = new Size(32, 15);
+			labelName.Size = new Size(43, 21);
 			labelName.TabIndex = 1;
 			labelName.Text = "label";
 			// 
 			// labelValue
 			// 
 			labelValue.AutoSize = true;
-			labelValue.Location = new Point(163, 66);
+			labelValue.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+			labelValue.Location = new Point(181, 66);
 			labelValue.Name = "labelValue";
-			labelValue.Size = new Size(32, 15);
+			labelValue.Size = new Size(43, 21);
 			labelValue.TabIndex = 2;
 			labelValue.Text = "label";
 			// 
@@ -69,7 +71,7 @@
 			Controls.Add(labelName);
 			Controls.Add(trackBar);
 			Name = "NumberSelect";
-			Size = new Size(198, 98);
+			Size = new Size(400, 100);
 			((System.ComponentModel.ISupportInitialize)trackBar).EndInit();
 			ResumeLayout(false);
 			PerformLayout();

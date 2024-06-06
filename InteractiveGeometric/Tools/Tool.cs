@@ -12,7 +12,7 @@ namespace InteractiveGeometric.Tools
         public ToolMode ToolMode { get; set; }
 		public abstract void Use(PointF point);
 		public abstract void ChangeOption(int indexOption);
-		
+		public abstract string[] ToolOptionInfos { get; }
 		public List<PointF> SelectedPoints { get; set; }
 		public Rectangle SelectedBounds 
 		{ 

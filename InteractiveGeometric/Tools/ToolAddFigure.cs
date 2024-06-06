@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace InteractiveGeometric.Tools
 {
-    public class ToolAddFigure : Tool, IDragMovable
+	public class ToolAddFigure : Tool, IDragMovable
 	{
 		private NumberSelect numberSelect;
 		private Figure previewFigure;
@@ -20,6 +20,12 @@ namespace InteractiveGeometric.Tools
 		}
 
 		public FigureType ToolOption { get; set; } = FigureType.ER;
+		public override string[] ToolOptionInfos => new string[]
+		{ 
+			"Выберите 4 точки с помощью ЛКМ",
+			"Выберите от 3 точек и более с помощью ЛКМ",
+			"Выберите нужное кол-во лучей и \"растяните\" фигуру с помощью ЛКМ"
+		};
 
 		public override void ChangeOption(int indexOption)
 		{

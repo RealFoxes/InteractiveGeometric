@@ -1,9 +1,9 @@
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using InteractiveGeometric.Controllers;
 
 namespace InteractiveGeometric
 {
-    public partial class MainForm : Form
+	public partial class MainForm : Form
 	{
 		private ToolController toolController;
 		private GraphicsController graphicsController;
@@ -13,9 +13,10 @@ namespace InteractiveGeometric
 		{
 			InitializeComponent();
 			figuresController = new FiguresController();
-			toolController = new ToolController(panelAdditionalOption, figuresController);
+			toolController = new ToolController(panelAdditionalOption, labelToolInfo, figuresController);
 			graphicsController = new GraphicsController(pictureBox, figuresController, toolController);
 			comboBoxFigures.SelectedIndex = 0;
+			graphicsController.Draw();
 		}
 
 		private void radioButtonsCheckedChanged(object sender, EventArgs e)
@@ -46,7 +47,7 @@ namespace InteractiveGeometric
 		private void buttonClear_Click(object sender, EventArgs e)
 		{
 			toolController.Reset();
-			figuresController.Figures.Clear();
+			figuresController.Clear();
 			graphicsController.Draw();
 		}
 
@@ -79,9 +80,22 @@ namespace InteractiveGeometric
 		private void pictureBox_MouseUp(object sender, MouseEventArgs e)
 		{
 			var point = new Point(e.X, e.Y);
-			if(toolController.MouseUp(point))
+			if (toolController.MouseUp(point))
 				graphicsController.Draw();
 
+		}
+
+		private void buttonInfo_Click(object sender, EventArgs e)
+		{
+			string info =
+				"Краткая справка по всему приложению:\n" +
+				"В верхней части приложения выбираются инструменты\n" +
+				"Через переключатели группа, а в выпадающем списке уже конкретный инструмент\n" +
+				"Вся интеракция с графикой происходит через нажатие на ЛКМ и ПКМ\n" +
+				"Поддерживается зажатие мышки\n" +
+				"В левом нижнем углу высвечиваються подсказки";
+
+			MessageBox.Show(info, "Справка");
 		}
 	}
 }
