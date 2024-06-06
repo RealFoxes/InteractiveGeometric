@@ -146,6 +146,31 @@ namespace InteractiveGeometric.Figures
 				Points[i] = new PointF(Points[i].X, newY);
 			}
 		}
+		public void ScaleXY(int increasePixels)
+		{
+			PointF center = GetCenter();
+
+			for (int i = 0; i < Points.Count; i++)
+			{
+				PointF point = Points[i];
+
+				// Calculate the distance from the center to the point
+				float dx = point.X - center.X;
+				float dy = point.Y - center.Y;
+				float distance = (float)Math.Sqrt(dx * dx + dy * dy);
+
+				// Calculate the new distance after increasing by increasePixels
+				float newDistance = distance + increasePixels;
+
+				// Calculate the new position of the point
+				float ratio = newDistance / distance;
+				float newX = center.X + dx * ratio;
+				float newY = center.Y + dy * ratio;
+
+				Points[i] = new PointF(newX, newY);
+			}
+		}
+
 		public void Mirror()
 		{
 			Point C = GetCenter(); // Get the center of the figure

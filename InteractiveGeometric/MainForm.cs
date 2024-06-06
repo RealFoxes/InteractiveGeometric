@@ -35,6 +35,7 @@ namespace InteractiveGeometric
 
 			}
 			toolController.ToolChanging((ToolType)radioButton.Tag);
+			graphicsController.Draw();
 		}
 		private void comboBoxesChanged(object sender, EventArgs e)
 		{

@@ -26,9 +26,6 @@ namespace InteractiveGeometric.Tools
 			var selectedFigure = toolController.figuresController.GetFigure(point);
 			if (selectedFigure == null) return;
 			toolController.figuresController.Figures.Remove(selectedFigure);
-			var selectedSto = toolController.figuresController.GetSTO(point);
-			if (selectedSto == null) return;
-			toolController.figuresController.STOs.Remove(selectedSto);
 			Complete();
 		}
 	}

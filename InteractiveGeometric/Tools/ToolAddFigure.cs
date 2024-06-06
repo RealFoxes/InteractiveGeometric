@@ -125,7 +125,6 @@ namespace InteractiveGeometric.Tools
 			{
 				nStar.Bounds = SelectedBounds;
 				previewFigure.Calculate();
-				previewFigure.Calculated = true;
 			}
 			Complete();
 		}

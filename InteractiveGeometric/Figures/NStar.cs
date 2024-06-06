@@ -27,6 +27,7 @@
             }
 
             Points = starPoints;
-        }
+			Calculated = true;
+		}
     }
 }

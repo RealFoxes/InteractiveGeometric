@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InteractiveGeometric.Figures;
+using Polybool.Net.Logic;
+using Polybool.Net.Objects;
+using PbPoint = Polybool.Net.Objects.Point;
+using Region = Polybool.Net.Objects.Region;
 
 namespace InteractiveGeometric.Controllers
 {
     public class FiguresController
     {
         public List<Figure> Figures { get; set; }
-        public List<SetTheoreticOperations> STOs { get; private set; }
-
-        private Figure preview;
         public Figure Preview { get; set; }
         public FiguresController()
         {
             Figures = new List<Figure>();
-			STOs = new List<SetTheoreticOperations>();
         }
         public Figure CreateFigure(FigureType type, List<PointF> points, Color selectedColor)
         {
@@ -49,43 +49,65 @@ namespace InteractiveGeometric.Controllers
 			}
 			return null;
 		}
-        public SetTheoreticOperations GetSTO(PointF point)
-		{
-			foreach (var sto in STOs)
-			{
-				if(sto.Figure1.PointInPolygon(point) || sto.Figure2.PointInPolygon(point))
-					return sto;
-			}
-			return null;
-		}
 
         public void Union(Figure figure1, Figure figure2)
 		{
-			AddSTO(figure1, figure2, OperationType.Union);
-		}
+			var polygons = ConvertToPolyBool(new List<Figure> { figure1, figure2 });
 
-		public void Intersection(Figure figure1, Figure figure2)
-		{
-			AddSTO(figure1, figure2, OperationType.Intersection);
-		}
-		private void AddSTO(Figure figure1, Figure figure2, OperationType operation)
-		{
-			figure1.Points.Add(figure1.Points[0]);
-			figure2.Points.Add(figure2.Points[0]);
+			var unified = SegmentSelector.Union(polygons[0], polygons[1]);
+			var list = ConvertToFigures(unified, figure1.Color);
+			Figures.AddRange(list);
 
-			var sto = new SetTheoreticOperations();
-			sto.Operation = operation;
-			sto.Figure1 = figure1;
-			sto.Figure2 = figure2;
 			Figures.Remove(figure1);
 			Figures.Remove(figure2);
-			STOs.Add(sto);
+
+		}
+		public void Intersection(Figure figure1, Figure figure2)
+		{
+			var polygons = ConvertToPolyBool(new List<Figure> { figure1, figure2 });
+
+			var unified = SegmentSelector.Intersect(polygons[1], polygons[0]);
+
+			var list = ConvertToFigures(unified, figure1.Color);
+			Figures.AddRange(list);
+			Figures.Remove(figure1);
+			Figures.Remove(figure2);
+
+		}
+		private List<Polygon> ConvertToPolyBool(List<Figure> figures)
+		{
+			var list = new List<Polygon>();
+			foreach (var figure in figures)
+			{
+				var polygon = new Polygon();
+				var region = new Region();
+				polygon.Regions.Add(region);
+				region.Points = new List<PbPoint>();
+				foreach (var point in figure.Points)
+					region.Points.Add(new PbPoint((decimal)point.X, (decimal)point.Y));
+				list.Add(polygon);
+			}
+			return list;
+		}
+		private List<Figure> ConvertToFigures(Polygon polygon, Color color)
+		{
+			var list = new List<Figure>();
+			foreach (var region in polygon.Regions)
+			{
+				var points = new List<PointF>();
+				foreach (var point in region.Points)
+					points.Add(new PointF((float)point.X, (float)point.Y));
+					//возможно нужна логика связки 
+
+				var figure = CreateFigure(FigureType.FPg, points, color);
+				list.Add(figure);
+			}
+			return list;
 		}
 
 		public void Clear()
 		{
 			Figures.Clear();
-			STOs.Clear();
 		}
 	}
 }

@@ -37,7 +37,12 @@ namespace InteractiveGeometric.Controllers
 
             var fig3 = figuresController.CreateNStar(3, new Rectangle(600,100,300,300), Color.DarkCyan);
             var fig4 = figuresController.CreateNStar(3, new Rectangle(900,400,-300,-300), Color.Bisque);
-            figuresController.Figures.Add(fig1);
+            fig1.Calculate();
+            fig2.Calculate();
+            fig3.Calculate();
+            fig4.Calculate();
+
+			figuresController.Figures.Add(fig1);
             figuresController.Figures.Add(fig2);
             figuresController.Figures.Add(fig3);
             figuresController.Figures.Add(fig4);
@@ -47,7 +52,8 @@ namespace InteractiveGeometric.Controllers
         {
             AdditionalPanel.Controls.Clear();
             AdditionalPanel.Visible = false;
-            switch (tag)
+			SelectedTool?.Reset();
+			switch (tag)
             {
                 case ToolType.None:
                     break;
@@ -74,7 +80,7 @@ namespace InteractiveGeometric.Controllers
             AdditionalPanel.Controls.Clear();
 			AdditionalPanel.Visible = false;
 			SelectedTool.ChangeOption(indexOption);
-            PrintToolInfo(SelectedTool.ToolOptionInfos[indexOption]);
+			PrintToolInfo(SelectedTool.ToolOptionInfos[indexOption]);
         }
         public void UseTool(Point point)
         {

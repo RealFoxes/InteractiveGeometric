@@ -64,7 +64,7 @@ namespace InteractiveGeometric.Tools
 				toolController.PrintToolError("Не может быть выбран кубический сплайн");
 				return false;
 			}
-
+			figure.IsSelected = true;
 			selectedFigures.Add(figure);
 			SelectedPoints.Add(point);
 			if (selectedFigures.Count == 2)
