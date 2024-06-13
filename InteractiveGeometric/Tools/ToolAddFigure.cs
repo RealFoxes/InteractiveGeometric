@@ -19,9 +19,10 @@ namespace InteractiveGeometric.Tools
 		{
 		}
 
-		public FigureType ToolOption { get; set; } = FigureType.ER;
+		public FigureType ToolOption { get; set; } = FigureType.Ln;
 		public override string[] ToolOptionInfos => new string[]
 		{ 
+			"Выберите 2 точки с помощью ЛКМ",
 			"Выберите 4 точки с помощью ЛКМ",
 			"Выберите от 3 точек и более с помощью ЛКМ",
 			"Выберите нужное кол-во лучей и \"растяните\" фигуру с помощью ЛКМ"
@@ -49,6 +50,11 @@ namespace InteractiveGeometric.Tools
 			{
 				case FigureType.None:
 					return;
+				case FigureType.Ln:
+					ToolMode = ToolMode.SelectPoint;
+					SelectedPoints.Add(point);
+					if (SelectedPoints.Count == 2) Complete();
+					break;
 				case FigureType.ER:
 					ToolMode = ToolMode.SelectPoint;
 					SelectedPoints.Add(point);

@@ -69,6 +69,9 @@ namespace InteractiveGeometric.Controllers
             {
                 case FigureType.None:
                     break;
+                case FigureType.Ln:
+                    g.DrawLine(new Pen(figure.Color), figure.Points[0], figure.Points[1]);
+                    break;
                 case FigureType.ER:
                     DrawCubicSpline(figure.Points, figure.Color);
                     break;

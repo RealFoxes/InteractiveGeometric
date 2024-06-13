@@ -139,6 +139,11 @@ namespace InteractiveGeometric.Controllers
     {
         None = -1,
         /// <summary>
+        /// Отрезок
+        /// </summary>
+        Ln,
+
+        /// <summary>
         /// Кубический сплайн
         /// </summary>
         ER,

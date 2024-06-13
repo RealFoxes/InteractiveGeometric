@@ -208,7 +208,7 @@ namespace InteractiveGeometric
 			// 
 			comboBoxFigures.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
 			comboBoxFigures.FormattingEnabled = true;
-			comboBoxFigures.Items.AddRange(new object[] { "Кубический сплайн | ER", "Произвольный n-угольник | FPg", "Правильная n-конечная звезда | Zv" });
+			comboBoxFigures.Items.AddRange(new object[] { "Отрезок", "Кубический сплайн | ER", "Произвольный n-угольник | FPg", "Правильная n-конечная звезда | Zv" });
 			comboBoxFigures.Location = new Point(31, 26);
 			comboBoxFigures.Margin = new Padding(3, 2, 3, 2);
 			comboBoxFigures.Name = "comboBoxFigures";
